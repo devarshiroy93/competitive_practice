@@ -1,17 +1,46 @@
-function sol(nums) {
-    let n = nums.length;
-    let set = new Set(nums);
-    let maxConsecutive = 1
-    for (let i = 0; i < n; i++) {
-        if (!set.has(nums[i] - 1)) {
-            let right = 1
-            while (set.has(nums[i] + right)) {
-                right = right + 1;
-                maxConsecutive = Math.max(maxConsecutive, right);
+
+function removeNthFromEnd(head, n) {
+
+    let dummyNode = { val: -1, next: null };
+
+    dummyNode.next = head;
+    let dummyPtr = dummyNode;
+
+    let count = 0;
+    let left = head;
+    let right = head;
+
+    while (count < n) {
+        right = right.next
+        count++
+    }
+
+    while (right !== null) {
+        left = left.next;
+        right = right.next;
+        dummyPtr = dummyPtr.next;
+    }
+
+    dummyPtr.next = left.next;
+    return dummyNode.next;
+
+
+
+
+}
+
+let practL3 = {
+    val: 1,
+    next: {
+        val: 2,
+        next: {
+            val: 3,
+            next: {
+                val: 4,
+                next: null
             }
         }
     }
-    return maxConsecutive
 }
 
-sol([2, 20, 4, 10, 3, 4, 5]);
+let practL3Res = removeNthFromEnd(practL3, 2);
