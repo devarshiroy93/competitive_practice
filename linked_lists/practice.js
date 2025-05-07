@@ -1,46 +1,29 @@
+class Practice {
+    lengthOfLongestSubstringKDistinct(s, k) {
+        let l = 0;
+        let n = s.length - 1;
+        let res = 0;
+        let charSet = new Set()
 
-function removeNthFromEnd(head, n) {
+        for (let r = 0; r <= n; r++) {
+            charSet.add(s[r]);
 
-    let dummyNode = { val: -1, next: null };
-
-    dummyNode.next = head;
-    let dummyPtr = dummyNode;
-
-    let count = 0;
-    let left = head;
-    let right = head;
-
-    while (count < n) {
-        right = right.next
-        count++
-    }
-
-    while (right !== null) {
-        left = left.next;
-        right = right.next;
-        dummyPtr = dummyPtr.next;
-    }
-
-    dummyPtr.next = left.next;
-    return dummyNode.next;
-
-
-
-
-}
-
-let practL3 = {
-    val: 1,
-    next: {
-        val: 2,
-        next: {
-            val: 3,
-            next: {
-                val: 4,
-                next: null
+            while (k < charSet.size) {
+                charSet.delete(s[l]);
+                l++;
             }
+            let windowLen = r - l + 1;
+            res = Math.max(res, windowLen);
         }
+        console.log('res', res)
+        return res;
     }
-}
 
-let practL3Res = removeNthFromEnd(practL3, 2);
+}
+const ga1 = "eceba"
+
+
+
+new Practice().lengthOfLongestSubstringKDistinct(ga1, 2);
+new Practice().lengthOfLongestSubstringKDistinct("aa", 1);
+new Practice().lengthOfLongestSubstringKDistinct("aabcdefffgh", 2);
