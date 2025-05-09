@@ -1,29 +1,47 @@
 class Practice {
-    lengthOfLongestSubstringKDistinct(s, k) {
-        let l = 0;
-        let n = s.length - 1;
-        let res = 0;
-        let charSet = new Set()
+    isValidBST(root) {
+        function isValid(node, min, max) {
 
-        for (let r = 0; r <= n; r++) {
-            charSet.add(s[r]);
-
-            while (k < charSet.size) {
-                charSet.delete(s[l]);
-                l++;
+            if (node === null) {
+                return true
             }
-            let windowLen = r - l + 1;
-            res = Math.max(res, windowLen);
+
+            if (!((node.val > min) && (node.val < max))) {
+                return false
+            }
+
+            //recursive call here
+
+            return isValid(node.left, -Infinity, node.val) && isValid(node.right, node.val, Infinity);
         }
-        console.log('res', res)
-        return res;
+
+        return isValid(root, -Infinity, Infinity);
     }
-
 }
-const ga1 = "eceba"
+const prac1 = {
+    val: 5,
+    left: {
+      val: 4,
+      left: null,
+      right: null
+    },
+    right: {
+      val: 6,
+      left: {
+        val: 3,
+        left: null,
+        right: null
+      },
+      right: {
+        val: 7,
+        left: null,
+        right: null
+      }
+    }
+  }
+  
 
 
 
-new Practice().lengthOfLongestSubstringKDistinct(ga1, 2);
-new Practice().lengthOfLongestSubstringKDistinct("aa", 1);
-new Practice().lengthOfLongestSubstringKDistinct("aabcdefffgh", 2);
+new Practice().isValidBST(prac1);
+
