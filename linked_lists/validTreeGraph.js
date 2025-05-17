@@ -20,8 +20,8 @@ function validTree(n, edges) {
         }
         visited.add(i);
 
-        for (let j = 0; j < adj[i].length; j++) {
-            let nei = adj[i][j];
+        for (let j = 0; j < adjList[i].length; j++) {
+            let nei = adjList[i][j];
             if (prev === nei) {
                 continue
             }
