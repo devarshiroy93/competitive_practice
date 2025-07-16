@@ -1,40 +1,37 @@
-//join to disjointed sets
-//can be used to find a cycle in a graph as well
-
-
 class UnionFind {
 
-    constructor(n) {
-        //array to store the parent of nodes
-        // indexes point to node-->                 0,1,2,3,4,5
-        //values point to parent nodes when n=5    [0,1,2,3,4,5]
-        //initially every node is a parent of itself
-        //once we call union method then the parent child relation between two nodes
-        //  can change/Changes
-        this.parent = Array.from({ length: n }, (_, i) => i)
+    constructor(size) {
+        this.parent = Array(size).fill(0).map((_, i) => i);
+        this.rank = Array(size).fill(0)
     }
 
-    //method to find the parent of particular node by number
     find(x) {
-
-        if (this.parent[x] !== x) {
+        if (this.parent[x] != x) {
             this.parent[x] = this.find(this.parent[x]);
         }
-        return this.parent[x];
+        return this.parent[x]
     }
 
-    union(x, y) {
-        let p1 = this.find(x);
-        let p2 = this.find(y);
-        if (p1 == p2) {
-            return false
+    union(X, Y) {
+        let rootX = this.find(X);
+        let rootY = this.find(Y);
+
+        let rankX = this.rank[rootX];
+        let rankY = this.rank[rootY];
+
+        if (rootX == rootY) return false;
+
+        if (rankX < rankY) {
+            this.parent[rootX] = rootY;
+        } else if (rankY > rankX) {
+            this.parent[rootY] = rootX;
+        } else {
+            this.parent[rootY] = rootX;
+            this.rank[rootX]++;
+
         }
-        this.parent[p2] = p1;
-        return true;
+
+        return true
+
     }
 }
-
-let uf = new UnionFind(5);
-uf.union(1,2);
-uf.union(2,3);
-console.log(uf.parent);

@@ -29,3 +29,40 @@ function cloneGraph(node) {
     return dfs(node);
 
 }
+
+class GNodenew {
+
+    constructor(val, neighbors = []) {
+        this.val = val;
+        this.neighbors = neighbors;
+    }
+}
+//clone an undirected unconnected graph
+function cloneGraphVariant(nodeList) {
+
+    let oldToNew = new Map();
+
+    function dfs(node) {
+        if (node == null) {
+            return null
+        }
+
+        if (oldToNew.has(node)) {
+            return oldToNew.get(node);
+        }
+        let copy = new GNodenew(node.val);
+
+        oldToNew.set(node, copy);
+        for (let nei of node.neighbors) {
+            copy.neighbors.push(dfs(nei));
+        }
+        return copy;
+    }
+    //loop over each node of the  graph
+
+    for (let node of nodeList) {
+        if (!oldToNew.has(node)) {
+            dfs(node)
+        }
+    }
+}
